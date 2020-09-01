@@ -18,6 +18,7 @@ package com.example.android.hilt.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,11 @@ import javax.inject.Inject
  * Fragment that displays buttons whose interactions are recorded.
  */
 @AndroidEntryPoint
-class ButtonsFragment : Fragment() {
+class ButtonsFragment : Fragment {
+
+    constructor() {
+        Log.e("ButtonFrag", "construct")
+    }
 
 //    한정자로 LoggerDataSource를 return해주는 inject에서 찾음 (InMemoryLogger)
     @DatabaseLogger

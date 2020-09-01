@@ -40,7 +40,11 @@ import javax.inject.Inject
  * Fragment that displays the database logs.
  */
 @AndroidEntryPoint
-class LogsFragment : Fragment() {
+class LogsFragment : Fragment {
+
+    constructor() {
+        android.util.Log.e("LogFrag", "construct")
+    }
 
 //    한정자로 LoggerDataSource를 return해주는 inject에서 찾음 (InMemoryLogger)
     @DatabaseLogger

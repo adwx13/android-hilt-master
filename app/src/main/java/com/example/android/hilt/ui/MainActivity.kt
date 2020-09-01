@@ -17,11 +17,16 @@
 package com.example.android.hilt.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.example.android.hilt.LogApplication
 import com.example.android.hilt.R
+import com.example.android.hilt.databinding.ActivityMainBinding
 import com.example.android.hilt.navigator.AppNavigator
 import com.example.android.hilt.navigator.Screens
+import com.example.android.hilt.viewmodel.BaseBindingComponent
+import com.example.android.hilt.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,16 +38,19 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var navigator: AppNavigator
+    val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main, BaseBindingComponent())
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.executePendingBindings()
 
-//        navigator는 Inject로 hilt에서 선언해줌
-//        navigator = (applicationContext as LogApplication).serviceLocator.provideNavigator(this)
-
+        viewModel._text.value = "viewModel init value"
         if (savedInstanceState == null) {
             navigator.navigateTo(Screens.BUTTONS)
         }
